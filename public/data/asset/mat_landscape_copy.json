@@ -1,0 +1,20 @@
+{
+  "name": "mat_landscape (copy)",
+  "type": "material",
+  "material": {
+    "type": "shader",
+    "params": {
+      "metalness": 0,
+      "opacity": 1
+    },
+    "side": 0,
+    "shaderParams": {
+      "color": {
+        "type": 10,
+        "value": "#66ae4c"
+      }
+    },
+    "shader": "GroundShader"
+  },
+  "id": "9ae2e4a2-c8aa-4617-a289-61ea70387bdc"
+}

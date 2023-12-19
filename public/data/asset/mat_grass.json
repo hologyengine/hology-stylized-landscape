@@ -1,0 +1,61 @@
+{
+  "name": "mat_grass",
+  "type": "material",
+  "material": {
+    "type": "lambert",
+    "params": {
+      "metalness": 0,
+      "opacity": 1
+    },
+    "side": 2,
+    "shaderParams": {
+      "color": {
+        "type": 10,
+        "value": "#dd1d97"
+      },
+      "emissive": {
+        "type": 10,
+        "value": "#000000"
+      },
+      "emissiveIntensity": {
+        "type": 1
+      },
+      "emissiveMap": {
+        "type": 2
+      },
+      "map": {
+        "type": 2
+      },
+      "lightMap": {
+        "type": 2
+      },
+      "lightMapIntensity": {
+        "type": 1
+      },
+      "aoMap": {
+        "type": 2
+      },
+      "aoMapIntensity": {
+        "type": 1
+      },
+      "specularMap": {
+        "type": 2
+      },
+      "alphaMap": {
+        "type": 2,
+        "value": "9ae2dbfc-f928-4bc8-91d0-a34a1f94b89d"
+      },
+      "envMap": {
+        "type": 2
+      },
+      "reflectivity": {
+        "type": 1
+      },
+      "refractionRatio": {
+        "type": 1
+      }
+    },
+    "transparent": true
+  },
+  "id": "9ae2d90b-fef8-4be3-90e4-b4086fb815c0"
+}

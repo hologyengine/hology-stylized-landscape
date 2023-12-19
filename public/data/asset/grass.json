@@ -1,0 +1,19 @@
+{
+  "name": "grass",
+  "path": "",
+  "type": "mesh",
+  "collisionDetection": true,
+  "id": "9ae2d9e4-8a84-451b-9a13-207f3c4a98ec",
+  "fileKey": "grass.glb",
+  "fileFormat": "glb",
+  "sourceFile": "C:\\Users\\adamr\\Documents\\code\\hology-stylized-landscape\\models\\grass.glb",
+  "mesh": {},
+  "receiveShadow": false,
+  "materialAssignments": [
+    {
+      "color": "#ffffff",
+      "materialId": "9ae2e918-e1f8-4803-92b3-f65e79060805",
+      "name": "default"
+    }
+  ]
+}

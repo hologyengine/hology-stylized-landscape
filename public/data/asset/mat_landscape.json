@@ -1,0 +1,59 @@
+{
+  "name": "mat_landscape",
+  "type": "material",
+  "material": {
+    "type": "lambert",
+    "params": {
+      "metalness": 0,
+      "opacity": 1
+    },
+    "side": 0,
+    "shaderParams": {
+      "color": {
+        "type": 10,
+        "value": "#073918"
+      },
+      "emissive": {
+        "type": 10,
+        "value": "#000000"
+      },
+      "emissiveIntensity": {
+        "type": 1
+      },
+      "emissiveMap": {
+        "type": 2
+      },
+      "map": {
+        "type": 2
+      },
+      "lightMap": {
+        "type": 2
+      },
+      "lightMapIntensity": {
+        "type": 1
+      },
+      "aoMap": {
+        "type": 2
+      },
+      "aoMapIntensity": {
+        "type": 1
+      },
+      "specularMap": {
+        "type": 2
+      },
+      "alphaMap": {
+        "type": 2
+      },
+      "envMap": {
+        "type": 2
+      },
+      "reflectivity": {
+        "type": 1
+      },
+      "refractionRatio": {
+        "type": 1
+      }
+    }
+  },
+  "id": "9ae2e0b7-667e-4181-a9c0-0112fba83634"
+}

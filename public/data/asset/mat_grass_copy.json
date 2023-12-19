@@ -1,0 +1,29 @@
+{
+  "name": "mat_grass (copy)",
+  "type": "material",
+  "material": {
+    "type": "shader",
+    "params": {
+      "metalness": 0,
+      "opacity": 1
+    },
+    "side": 2,
+    "shaderParams": {
+      "color": {
+        "type": 10,
+        "value": "#8dc062"
+      },
+      "colorBottom": {
+        "type": 10,
+        "value": "#66ae4c"
+      },
+      "alphaMap": {
+        "type": 2,
+        "value": "9ae31dce-f194-41d3-9a8e-ebdcd6c9e891"
+      }
+    },
+    "transparent": false,
+    "shader": "GrassShader"
+  },
+  "id": "9ae2e918-e1f8-4803-92b3-f65e79060805"
+}

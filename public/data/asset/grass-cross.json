@@ -1,0 +1,10 @@
+{
+  "name": "grass-cross",
+  "path": "",
+  "type": "mesh",
+  "collisionDetection": true,
+  "id": "9ae2d6e2-82c8-45f9-b20d-8f63966193af",
+  "fileKey": "grass-cross.glb",
+  "fileFormat": "glb",
+  "sourceFile": "C:\\Users\\adamr\\Documents\\code\\hology-stylized-landscape\\models\\grass-cross.glb"
+}
