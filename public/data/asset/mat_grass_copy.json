@@ -13,13 +13,17 @@
         "type": 10,
         "value": "#8dc062"
       },
+      "color2": {
+        "type": 10,
+        "value": "#b2d25b"
+      },
       "colorBottom": {
         "type": 10,
         "value": "#66ae4c"
       },
       "alphaMap": {
         "type": 2,
-        "value": "9ae31dce-f194-41d3-9a8e-ebdcd6c9e891"
+        "value": "9ae31dc5-c8e4-4013-81f6-73ba9c0c61cb"
       }
     },
     "transparent": false,

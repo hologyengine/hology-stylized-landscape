@@ -12,6 +12,10 @@
       "color": {
         "type": 10,
         "value": "#66ae4c"
+      },
+      "colorPath": {
+        "type": 10,
+        "value": "#cdb870"
       }
     },
     "shader": "GroundShader"

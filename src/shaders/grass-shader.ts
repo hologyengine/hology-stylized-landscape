@@ -1,11 +1,14 @@
 
-import { NodeShaderMaterial, RgbNode, attributes, float, lambertMaterial, mix, pow, rgb, rgba, smoothstep, standardMaterial, textureSampler2d, transformed, varyingAttributes, varyingFloat, vec3 } from "@hology/core/shader-nodes";
+import { NodeShaderMaterial, SimplexNoiseNode, attributes, clamp, float, lambertMaterial, mix, rgb, rgba, smoothstep, textureSampler2d, timeUniforms, transformed, translateX, uniforms, varyingAttributes, varyingFloat, vec2, vec4 } from "@hology/core/shader-nodes";
 import { NodeShader, NodeShaderOutput, Parameter } from "@hology/core/shader/shader";
-import { Color, DoubleSide, Texture } from "three";
+import { Color, Texture } from "three";
 
 export class GrassShader extends NodeShader {
   @Parameter()
   color: Color
+
+  @Parameter()
+  color2: Color
 
   @Parameter()
   colorBottom: Color
@@ -16,34 +19,37 @@ export class GrassShader extends NodeShader {
 
   output(): NodeShaderOutput {
     const distanceFromCamera = transformed.mvPosition.z().multiply(float(-1))
-    //const distanceAlpha = varyingFloat(select(distanceFromCamera.lt(float(100)), float(1), float(0)))
-    // Use this approach to fade it away
     const distanceAlpha = varyingFloat(smoothstep(float(100), float(60) , distanceFromCamera))
+    
+    const worldPosition = uniforms.instanceMatrix.multiplyVec(vec4(attributes.position, float(1)))
 
+    const noiseAnimatedOffset = vec2(1,1).multiplyScalar(timeUniforms.elapsed.multiply(0.5))
+    const noise = new SimplexNoiseNode(worldPosition.xz().add(noiseAnimatedOffset).multiplyScalar(0.2))
+    
+    const colorNoiseScale = 0.07
+    const colorNoise = new SimplexNoiseNode(worldPosition.xz().multiplyScalar(colorNoiseScale))
+
+    const tipColor1 = rgb(this.color ?? 0xffffff)
+    const tipColor2 = rgb(this.color2 ?? 0xffffff)
+    const tipColor = mix(tipColor1, tipColor2, varyingFloat(clamp(colorNoise, float(0), float(1))))
+
+    const offsetFactor = 0.1
     
     const gradientColor = mix(
-      rgb(this.color ?? 0xffffff),
+      tipColor,
       rgb(this.colorBottom ?? new Color(0x4A8B32).convertSRGBToLinear()),
-      //attributes.uv.y(),
-      // For some reason I have to give a varying value to lambert
       varyingAttributes.uv.y().add(0.2)
     )
 
-    // TODO Must be a way to have required parameters to avoid runtime errors
     const alpha = this.alphaMap != null 
       ? textureSampler2d(this.alphaMap).sample(varyingAttributes.uv).r()
       : float(1)
 
-    // Standard material works on my PC but not a big visual difference
-    const lambertColor = standardMaterial({color: gradientColor}).rgb()
+    const lambertColor = lambertMaterial({color: gradientColor}).rgb()
 
-    // Calculate lambert color before applying the alpha so that
-    // light calculation can happen in the vertex shader 
-      
-    rgb(0xffffff)
     return {
       color: rgba(lambertColor, alpha.multiply(distanceAlpha)),
-      //transparent: true,
+      transform: translateX(float(offsetFactor).multiply(noise).multiply(float(1).subtract(attributes.uv.y())))
     }
   }
 
