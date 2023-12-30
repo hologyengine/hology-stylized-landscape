@@ -6,5 +6,8 @@
   "id": "9ae2dbfc-f928-4bc8-91d0-a34a1f94b89d",
   "fileKey": "sprite_0017.png",
   "fileFormat": "png",
-  "sourceFile": "C:\\Users\\adamr\\Downloads\\kenney_foliage-sprites (1)\\PNG\\Flat\\sprite_0017.png"
+  "sourceFile": "C:\\Users\\adamr\\Downloads\\kenney_foliage-sprites (1)\\PNG\\Flat\\sprite_0017.png",
+  "texture": {
+    "flipY": false
+  }
 }
