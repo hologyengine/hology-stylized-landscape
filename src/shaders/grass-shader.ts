@@ -1,5 +1,5 @@
 
-import { NodeShaderMaterial, SimplexNoiseNode, attributes, clamp, float, lambertMaterial, mix, rgb, rgba, smoothstep, textureSampler2d, timeUniforms, transformed, translateX, uniforms, varyingAttributes, varyingFloat, vec2, vec4 } from "@hology/core/shader-nodes";
+import { NodeShaderMaterial, SimplexNoiseNode, UniformVec3Node, attributes, clamp, combineTransforms, float, lambertMaterial, length, log, mix, normalize, rgb, rgba, select, smoothstep, textureSampler2d, timeUniforms, transformed, translateX, translateZ, uniforms, varyingAttributes, varyingFloat, varyingVec3, vec2, vec4 } from "@hology/core/shader-nodes";
 import { NodeShader, NodeShaderOutput, Parameter } from "@hology/core/shader/shader";
 import { Color, Texture } from "three";
 
@@ -18,10 +18,17 @@ export class GrassShader extends NodeShader {
   alphaMap: Texture
 
   output(): NodeShaderOutput {
+
+
+
     const distanceFromCamera = transformed.mvPosition.z().multiply(float(-1))
     const distanceAlpha = varyingFloat(smoothstep(float(100), float(60) , distanceFromCamera))
     
     const worldPosition = uniforms.instanceMatrix.multiplyVec(vec4(attributes.position, float(1)))
+
+    const playerPos = new UniformVec3Node('playerPos')
+    const distanceToPlayerPos = length(playerPos.subtract(worldPosition.xyz()))
+    const distanceToPlayerPosVarying = varyingFloat(distanceToPlayerPos) 
 
     const noiseAnimatedOffset = vec2(1,1).multiplyScalar(timeUniforms.elapsed.multiply(0.5))
     const noise = new SimplexNoiseNode(worldPosition.xz().add(noiseAnimatedOffset).multiplyScalar(0.2))
@@ -47,9 +54,26 @@ export class GrassShader extends NodeShader {
 
     const lambertColor = lambertMaterial({color: gradientColor}).rgb()
 
+    const playerDir = normalize(worldPosition.xyz().subtract(playerPos))
+    
+    // I can translate in x an z direction, combining the transforms. 
+    const grassTop = float(1).subtract(attributes.uv.y())
+    const grassDistanceMixFactor = log(distanceToPlayerPos).add(1)
+    const collideDistanceFactor = mix(float(1), float(0), clamp(distanceToPlayerPos.divide(2).add(.3), float(0), float(1)))
+        const invCollideDistanceFactor = float(1).subtract(collideDistanceFactor)
     return {
       color: rgba(lambertColor, alpha.multiply(distanceAlpha)),
-      transform: translateX(float(offsetFactor).multiply(noise).multiply(float(1).subtract(attributes.uv.y())))
+
+      //color: select(distanceToPlayerPos.lte(2), rgba(0xffffff), rgba(0x000000)), 
+      transform: combineTransforms( 
+
+            translateX(float(0.7).multiply(collideDistanceFactor).multiply(playerDir.x()).multiply(grassTop)),
+            translateZ(float(0.7).multiply(collideDistanceFactor).multiply(playerDir.z()).multiply(grassTop)),
+
+          translateX(float(offsetFactor).multiply(invCollideDistanceFactor).multiply(noise).multiply(grassTop)),
+          
+        ),
+      //transform: translateX(float(offsetFactor).multiply(noise).multiply(float(1).subtract(attributes.uv.y())))
     }
   }
 

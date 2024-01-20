@@ -1,7 +1,9 @@
 import {
   Actor, AnimationState,
   AnimationStateMachine, attach, BaseActor,
-  RootMotionClip
+  inject,
+  RootMotionClip,
+  World
 } from "@hology/core/gameplay";
 import {
   CharacterAnimationComponent,
@@ -9,13 +11,14 @@ import {
   CharacterMovementMode,
   ThirdPartyCameraComponent
 } from "@hology/core/gameplay/actors";
-import { AnimationClip, Bone, Loader, Mesh, MeshStandardMaterial, Object3D } from 'three';
+import { AnimationClip, Bone, Loader, Material, Mesh, MeshStandardMaterial, Object3D, ShaderMaterial } from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 
 @Actor()
 class CharacterActor extends BaseActor {
+  private world = inject(World)
   private animation = attach(CharacterAnimationComponent)
   public movement = attach(CharacterMovementComponent, {
     maxSpeed: 1.8,
@@ -80,7 +83,16 @@ class CharacterActor extends BaseActor {
     // we can pass the movement speed from the movement component to the animation component.
     // Because we are also scaling our mesh, we need to factor this in. 
     this.animation.movementSpeed = this.movement.horizontalSpeed / this.characterMesh.scale.x
-}
+
+
+    this.world.scene.traverse(o => {
+      if (o instanceof Mesh && o.material instanceof ShaderMaterial) {
+        if (o.material.uniforms['playerPos'] != null) {
+          o.material.uniforms['playerPos'].value = this.position
+        }
+      }
+    })
+  }
 
 
 
