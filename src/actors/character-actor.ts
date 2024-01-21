@@ -34,8 +34,9 @@ class CharacterActor extends BaseActor {
     height: 1,
     offsetX: 0,
     minDistance: 5,
-    maxDistance: 5,
+    maxDistance: 5.6,
     distance: 5,
+    bounceBackSpeed: 0,
     
   })
 
