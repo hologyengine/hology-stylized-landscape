@@ -1,10 +1,10 @@
 
-import { inject, Service, World, GameInstance, ViewController } from '@hology/core/gameplay';
+import { inject, Service, World, GameInstance, ViewController, PhysicsSystem } from '@hology/core/gameplay';
 import { SpawnPoint } from '@hology/core/gameplay/actors';
 import CharacterActor from '../actors/character-actor';
 import { InputService } from '@hology/core/gameplay/input';
 import PlayerController from './player-controller';
-import { BackSide, BufferGeometry, Material, Mesh, MeshBasicMaterial, MeshStandardMaterial, Side, SphereBufferGeometry, TextureLoader } from 'three';
+import { BackSide, BufferGeometry, Material, Mesh, MeshBasicMaterial, MeshStandardMaterial, Side, SphereBufferGeometry, TextureLoader, Vector3 } from 'three';
 
 @Service()
 class Game extends GameInstance {
@@ -12,8 +12,10 @@ class Game extends GameInstance {
   private view = inject(ViewController)
   private inputService = inject(InputService)
   private playerController = inject(PlayerController)
+  private physics = inject(PhysicsSystem)
 
   async onStart() {
+    this.physics.showDebug = false
     const spawnPoint = this.world.findActorByType(SpawnPoint)
     console.log(this.world)
     console.log(spawnPoint)
@@ -41,8 +43,11 @@ class Game extends GameInstance {
     const skyMat = new MeshBasicMaterial({color: 0xffffff, map: skyTexture, side: BackSide, fog: false})
     skyMesh.material = skyMat
 
+    const camera = character.thirdPartyCamera.camera.instance
+    
     this.view.onUpdate().subscribe(deltaTime => {
       skyMesh.rotateY(0.007 * deltaTime)
+      skyMesh.position.copy(camera.getWorldPosition(new Vector3()))
     })
   }
 }

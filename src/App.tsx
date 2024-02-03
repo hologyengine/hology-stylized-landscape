@@ -14,7 +14,8 @@ function App() {
       sceneName: 'demo', 
       dataDir: 'data', 
       shaders,
-      actors
+      actors,
+      xr: { enabled: true }
     })
     return () => runtime.shutdown()
   }, [containerRef])

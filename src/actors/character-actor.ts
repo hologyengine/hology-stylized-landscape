@@ -29,6 +29,8 @@ class CharacterActor extends BaseActor {
     fallingReorientation: true,
     fallingMovementControl: 0.2,
     jumpVelocity: 5,
+    colliderRadius: .3,
+    colliderHeight: 1
   })
   public thirdPartyCamera: ThirdPartyCameraComponent = attach(ThirdPartyCameraComponent, {
     height: 1,
@@ -36,7 +38,7 @@ class CharacterActor extends BaseActor {
     minDistance: 5,
     maxDistance: 5.6,
     distance: 5,
-    bounceBackSpeed: 0,
+    bounceBackSpeed: 3,
     
   })
 
@@ -77,6 +79,39 @@ class CharacterActor extends BaseActor {
     const meshRescaleFactor = 1/120
     this.characterMesh.scale.multiplyScalar(meshRescaleFactor)
     this.object.add(this.characterMesh)
+
+    const attackClips = await loadClips(loader, {
+      slash: 'assets/sword/Great Sword Slash.fbx',
+      spinSlash: 'assets/sword/Sword And Shield Attack.fbx',
+    })
+
+    setInterval(() => {
+      // In genshin impact, all attack animations will pause the default movement.
+      // This makes attacks look better. Basically they all use root motion
+
+      // When using root motion, you could play a root motion clip through the animator.
+      // Alternatively, have some other root motion feature that can control both the character
+      // movement and the animation at the same time. 
+      // One solution could be to call the movement and animation at the same time.
+
+
+      // So for the demo I
+      // have to have a way to pause movement when playing the animation
+      // or add support for root motion, basically passing in a root motion clip
+      // to the character controller. The least it can do is to check if a root motion clip is active 
+      // if so, do not update according to velocity or anything.
+      // then extend it with updating the character position based on the clip. 
+      // the animation component should always play the clip in place, removing the velocity track for the root bone.
+      const rootMotionSlash = RootMotionClip.fromClip(attackClips.spinSlash, false)
+      this.animation.play(rootMotionSlash, {
+        inPlace: false, loop: false, priority: 1
+      })
+      
+      this.movement.setRootMotionAction(this.animation.getRootMotionAction())
+
+      console.log(this.animation.getRootMotionAction())
+
+    }, 3000)
   }
 
   override onLateUpdate(deltaTime: number) {
