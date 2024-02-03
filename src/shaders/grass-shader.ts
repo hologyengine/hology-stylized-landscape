@@ -1,7 +1,7 @@
 
 import { NodeShaderMaterial, SimplexNoiseNode, UniformVec3Node, attributes, clamp, combineTransforms, float, lambertMaterial, length, log, mix, normalize, rgb, rgba, select, smoothstep, textureSampler2d, timeUniforms, transformed, translateX, translateZ, uniforms, varyingAttributes, varyingFloat, varyingVec3, vec2, vec4 } from "@hology/core/shader-nodes";
 import { NodeShader, NodeShaderOutput, Parameter } from "@hology/core/shader/shader";
-import { Color, Texture } from "three";
+import { Color, Texture, Vector3 } from "three";
 
 export class GrassShader extends NodeShader {
   @Parameter()
@@ -26,7 +26,7 @@ export class GrassShader extends NodeShader {
     
     const worldPosition = uniforms.instanceMatrix.multiplyVec(vec4(attributes.position, float(1)))
 
-    const playerPos = new UniformVec3Node('playerPos')
+    const playerPos = new UniformVec3Node('playerPos', new Vector3())
     const distanceToPlayerPos = length(playerPos.subtract(worldPosition.xyz()))
     const distanceToPlayerPosVarying = varyingFloat(distanceToPlayerPos) 
 
