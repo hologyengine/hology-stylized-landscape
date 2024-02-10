@@ -36,5 +36,9 @@
     "id": "9ae2dbfc-f928-4bc8-91d0-a34a1f94b89d",
     "name": "sprite_0017",
     "path": ""
+  },
+  "9b3fc357-17a2-4b06-8f10-2ac4e83b9380": {
+    "id": "9b3fc357-17a2-4b06-8f10-2ac4e83b9380",
+    "name": "VfxSlash"
   }
 }

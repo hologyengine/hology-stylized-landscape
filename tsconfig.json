@@ -20,7 +20,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "noEmit": true
+    "noEmit": true,
+    "typeRoots": ["node_modules/@types", "node_modules/three-nebula-types"]
   },
   "include": [
     "src"

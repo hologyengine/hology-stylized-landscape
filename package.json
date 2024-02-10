@@ -14,6 +14,7 @@
     "@dimforge/rapier3d-compat": "^0.11.2",
     "@hology/core": "file:../hology/packages/core/hology-core-0.0.27.tgz",
     "@types/three": "^0.139.0",
+    "@types/three-nebula": "^10.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "three": "^0.139.2"
@@ -23,11 +24,13 @@
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
     "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.55.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8"
+    "vite": "^5.0.8",
+    "vite-plugin-pwa": "^0.17.5"
   }
 }

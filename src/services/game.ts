@@ -15,10 +15,9 @@ class Game extends GameInstance {
   private physics = inject(PhysicsSystem)
 
   async onStart() {
+    this.view.showStats = true
     this.physics.showDebug = false
     const spawnPoint = this.world.findActorByType(SpawnPoint)
-    console.log(this.world)
-    console.log(spawnPoint)
     const character = await spawnPoint.spawnActor(CharacterActor)
     this.playerController.start()
     this.playerController.setup(character)
@@ -48,6 +47,12 @@ class Game extends GameInstance {
     this.view.onUpdate().subscribe(deltaTime => {
       skyMesh.rotateY(0.007 * deltaTime)
       skyMesh.position.copy(camera.getWorldPosition(new Vector3()))
+    })
+
+    this.world.scene.traverse((o) => {
+      if (o instanceof Mesh) {
+        //o.material = new MeshBasicMaterial({color: 0xff0000})
+      }
     })
   }
 }

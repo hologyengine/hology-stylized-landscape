@@ -40,6 +40,14 @@ class PlayerController {
       InputAction.rotateCamera,
       new Mousebind(0.003, false, "y")
     )
+    this.inputService.setTouchMoveBind(
+      InputAction.rotate,
+      new Mousebind(0.01, true, "x")
+    )
+    this.inputService.setTouchMoveBind(
+      InputAction.rotateCamera,
+      new Mousebind(0.003, false, "y")
+    )
     this.inputService.setWheelbind(
       InputAction.zoomCamera,
       new Wheelbind(0.0003, false)

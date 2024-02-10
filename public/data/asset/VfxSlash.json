@@ -1,0 +1,21 @@
+{
+  "name": "VfxSlash",
+  "type": "material",
+  "material": {
+    "type": "shader",
+    "params": {
+      "metalness": 0,
+      "opacity": 1
+    },
+    "side": 2,
+    "shaderParams": {
+      "color": {
+        "type": 10,
+        "value": "#000000"
+      }
+    },
+    "shader": "VfxSlash",
+    "transparent": true
+  },
+  "id": "9b3fc357-17a2-4b06-8f10-2ac4e83b9380"
+}

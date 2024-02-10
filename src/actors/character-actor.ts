@@ -14,6 +14,7 @@ import {
 import { AnimationClip, Bone, Loader, Material, Mesh, MeshStandardMaterial, Object3D, ShaderMaterial } from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import VfxSlashComponent from "./vfx-slash";
 
 
 @Actor()
@@ -41,6 +42,7 @@ class CharacterActor extends BaseActor {
     bounceBackSpeed: 3,
     
   })
+  public vfxSlash = attach(VfxSlashComponent)
 
   private characterMesh: Object3D
 
@@ -66,10 +68,12 @@ class CharacterActor extends BaseActor {
     const characterMaterial = new MeshStandardMaterial({color: 0x999999})
     this.characterMesh.traverse(o => {
       if (o instanceof Mesh) {
-      //  o.material = characterMaterial
+        //o.material = characterMaterial
         o.castShadow = true
+        //o.visible = false
       }
     })
+
 
     const sm = await this.createStateMachine(loader, this.characterMesh)
     this.animation.playStateMachine(sm)
@@ -84,7 +88,7 @@ class CharacterActor extends BaseActor {
       slash: 'assets/sword/Great Sword Slash.fbx',
       spinSlash: 'assets/sword/Sword And Shield Attack.fbx',
     })
-
+    
     setInterval(() => {
       // In genshin impact, all attack animations will pause the default movement.
       // This makes attacks look better. Basically they all use root motion
@@ -109,7 +113,9 @@ class CharacterActor extends BaseActor {
       
       this.movement.setRootMotionAction(this.animation.getRootMotionAction())
 
-      console.log(this.animation.getRootMotionAction())
+      setTimeout(() => this.vfxSlash.play(), 300)
+
+      //console.log(this.animation.getRootMotionAction())
 
     }, 3000)
   }
